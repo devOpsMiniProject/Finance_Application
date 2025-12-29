@@ -26,8 +26,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- SonarCloud Properties -->
-        <sonar.organization>votre-username-github</sonar.organization> <!-- À MODIFIER -->
-        <sonar.projectKey>votre-username-github_FinanceProject</sonar.projectKey> <!-- À MODIFIER -->
+        <sonar.organization>devopsminiproject</sonar.organization>
+        <sonar.projectKey>devopsminiproject_Finance_Application</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <!-- Plugins Versions -->
@@ -136,13 +136,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.plugin.version}</version>
+                <version>3.0.0-M7</version>
                 <configuration>
                     <argLine>
                         -Dnet.bytebuddy.experimental=true
                         -XX:+EnableDynamicAgentLoading
                         -Djdk.instrument.traceUsage
-                        ${surefireArgLine}
                     </argLine>
                     <includes>
                         <include>**/*Test.java</include>
