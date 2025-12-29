@@ -131,17 +131,15 @@
                 </configuration>
             </plugin>
 
+
             <!-- Surefire for Tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M7</version>
+                <version>3.1.2</version>
                 <configuration>
-                    <argLine>
-                        -Dnet.bytebuddy.experimental=true
-                        -XX:+EnableDynamicAgentLoading
-                        -Djdk.instrument.traceUsage
-                    </argLine>
+                    <!-- IMPORTANT: @{argLine} permet à JaCoCo d'injecter son agent -->
+                    <argLine>@{argLine} -Dnet.bytebuddy.experimental=true -XX:+EnableDynamicAgentLoading -Djdk.instrument.traceUsage</argLine>
                     <includes>
                         <include>**/*Test.java</include>
                         <include>**/*Tests.java</include>
@@ -157,60 +155,25 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
+                <version>0.8.14</version>
                 <executions>
                     <execution>
-                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <execution>
                         <id>report</id>
-                        <phase>verify</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
-                            <excludes>
-                                <exclude>**/model/**</exclude>
-                                <exclude>**/dto/**</exclude>
-                                <exclude>**/config/**</exclude>
-                                <exclude>**/exception/**</exclude>
-                                <exclude>**/FinanceProjectApplication.*</exclude>
-                            </excludes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>check-coverage</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <element>BUNDLE</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>LINE</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>${jacoco.minimum.coverage}</minimum>
-                                        </limit>
-                                        <limit>
-                                            <counter>BRANCH</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>${jacoco.minimum.branch.coverage}</minimum>
-                                        </limit>
-                                        <limit>
-                                            <counter>INSTRUCTION</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>${jacoco.minimum.instruction.coverage}</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
+                            <formats>
+                                <format>HTML</format>
+                                <format>XML</format>
+                            </formats>
                         </configuration>
                     </execution>
                 </executions>

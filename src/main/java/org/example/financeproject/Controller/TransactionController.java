@@ -1,6 +1,5 @@
-package org.example.financeproject.controller;
+package org.example.financeproject.Controller;
 
-import org.example.financeproject.Model.Transaction;
 import org.example.financeproject.Model.User;
 import org.example.financeproject.Pattern.Strategy.DepositStrategy;
 import org.example.financeproject.Pattern.Strategy.TransactionStrategy;
