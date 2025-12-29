@@ -26,10 +26,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- SonarCloud Properties -->
-        <sonar.organization>devopsminiproject</sonar.organization>
-        <sonar.projectKey>devopsminiproject_Finance_Application</sonar.projectKey>
+        <sonar.organization>devOpsMiniProject</sonar.organization>
+        <sonar.projectKey>devOpsMiniProject_Finance_Application</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-
         <!-- Plugins Versions -->
         <jacoco.version>0.8.10</jacoco.version>
         <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
