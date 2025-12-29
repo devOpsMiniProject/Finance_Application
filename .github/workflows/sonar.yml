@@ -2,35 +2,29 @@ name: SonarCloud Analysis
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  analyze:
+  build:
+    name: Build and SonarCloud Analysis
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # Important pour SonarCloud
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: maven
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Build and test
+      - name: Build and run tests
         run: mvn clean verify
         env:
           JAVA_TOOL_OPTIONS: "-Dnet.bytebuddy.experimental=true"
@@ -40,8 +34,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn sonar:sonar \
-            -Dsonar.projectKey=devopsminiproject_Finance_Application \
-            -Dsonar.organization=devOpsMiniProject \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=$SONAR_TOKEN \
-            -Dsonar.branch.name=main
+            -Dsonar.projectKey=devOpsMiniProject_Finance_Application \
+            -Dsonar.organization=devopsminiproject \
+            -Dsonar.host.url=https://sonarcloud.io
